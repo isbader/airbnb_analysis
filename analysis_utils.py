@@ -71,3 +71,9 @@ def get_number(str):
 
     return float(re.sub("[^0-9]", "", str))
 
+
+def plot_corr(df):
+    plt.figure(figsize=(20,10))
+    corr=df.corr()
+    sns.set(font_scale=2.5)
+    sns.heatmap(corr,annot=True, vmin=0, vmax=1, cmap = 'gist_heat_r')
