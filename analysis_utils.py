@@ -77,3 +77,61 @@ def plot_corr(df):
     corr=df.corr()
     sns.set(font_scale=2.5)
     sns.heatmap(corr,annot=True, vmin=0, vmax=1, cmap = 'gist_heat_r')
+
+
+def plot_line_correlation(dependent,target,dataframe,color='red'):
+    if len(dependent) == 1:
+        ncols = 1 #specify the number of columns
+        nrows = 1 #specify the number of rows 
+        fig, ax = plt.subplots(ncols=ncols, nrows=ncols, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10})
+        plt.show()
+    elif len(dependent) == 2:
+        ncols = 2 #specify the number of columns
+        nrows = 2 #specify the number of rows
+        fig, ax = plt.subplots(ncols=ncols, nrows=nrows, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,0]) 
+        sns.regplot(dependent[1], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,1])
+        plt.show()
+    
+    elif len(dependent) == 3:
+        ncols = 2 #specify the number of columns
+        nrows = 2 #specify the number of rows
+        fig, ax = plt.subplots(ncols=ncols, nrows=nrows, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,0]) 
+        sns.regplot(dependent[1], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,1])
+        sns.regplot(dependent[2], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,0])
+        plt.show()
+        
+    elif len(dependent) == 4:
+        ncols = 2 #specify the number of columns
+        nrows = 2 #specify the number of rows
+        fig, ax = plt.subplots(ncols=ncols, nrows=nrows, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,0]) 
+        sns.regplot(dependent[1], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,1])
+        sns.regplot(dependent[2], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,0])
+        sns.regplot(dependent[3], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,1])
+        plt.show()
+        
+    elif len(dependent) == 5:
+        ncols = 2 #specify the number of columns
+        nrows = 3 #specify the number of rows
+        fig, ax = plt.subplots(ncols=ncols, nrows=nrows, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,0]) 
+        sns.regplot(dependent[1], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,1])
+        sns.regplot(dependent[2], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,0])
+        sns.regplot(dependent[3], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,1])
+        sns.regplot(dependent[4], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,0])
+        plt.show()
+        
+    elif len(dependent) == 6:
+        ncols = 2 #specify the number of columns
+        nrows = 3 #specify the number of rows
+        fig, ax = plt.subplots(ncols=ncols, nrows=nrows, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,0]) 
+        sns.regplot(dependent[1], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,1])
+        sns.regplot(dependent[2], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,0])
+        sns.regplot(dependent[3], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,1])
+        sns.regplot(dependent[4], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,0])
+        sns.regplot(dependent[5], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,1])
+        plt.show()
