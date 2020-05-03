@@ -135,3 +135,61 @@ def plot_line_correlation(dependent,target,dataframe,color='red'):
         sns.regplot(dependent[4], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,0])
         sns.regplot(dependent[5], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,1])
         plt.show()
+        
+    elif len(dependent) == 7:
+        ncols = 3 #specify the number of columns
+        nrows = 3 #specify the number of rows
+        fig, ax = plt.subplots(ncols=ncols, nrows=nrows, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,0]) 
+        sns.regplot(dependent[1], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,1])
+        sns.regplot(dependent[2], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,0])
+        sns.regplot(dependent[3], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,1])
+        sns.regplot(dependent[4], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,0])
+        sns.regplot(dependent[5], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,1])
+        sns.regplot(dependent[6], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,2])
+        plt.show()
+
+    elif len(dependent) == 8:
+        ncols = 3 #specify the number of columns
+        nrows = 3 #specify the number of rows
+        fig, ax = plt.subplots(ncols=ncols, nrows=nrows, figsize=(12, 12)) #Intoduce a figure that includes the number of graphs
+        sns.regplot(dependent[0], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,0]) 
+        sns.regplot(dependent[1], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[0,1])
+        sns.regplot(dependent[2], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,0])
+        sns.regplot(dependent[3], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,1])
+        sns.regplot(dependent[4], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,0])
+        sns.regplot(dependent[5], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,1])
+        sns.regplot(dependent[6], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[1,2])
+        sns.regplot(dependent[7], target, data=dataframe, fit_reg=True,color=color,scatter_kws={'s':10}, ax=ax[2,2])
+        plt.show()
+
+
+def replace_mean(column,df):
+    return df[str(column)].fillna(df[str(column)].mean(),inplace = True)
+
+
+def change_tobool(column,df):
+    df[str(column)] = df[str(column)].apply(lambda x : 1 if x == 't' else 0)
+
+
+def magnify_corr(dataframe):
+    
+    cmap=sns.diverging_palette(5, 250, as_cmap=True)
+    corr = dataframe.corr()
+    
+    a = [dict(selector="th",props=[("font-size","7pt")]),
+     dict(selector="td",props=[('padding',"0em 0em")]),
+     dict(selector="th:hover",props=[("font-size","12pt")]),
+     dict(selector="tr:hover td:hover",props=[('max-width','200px'),('font-size','12pt')])]
+    
+    
+    return corr.style.background_gradient(cmap, axis=1)\
+        .set_properties(**{'max-width': '80px', 'font-size': '10pt'})\
+        .set_caption("Hover to magify")\
+        .set_precision(2)\
+        .set_table_styles(a)
+
+def top_corr_features(target,number,dataframe):
+    best_feature_corr=dataframe.corr()[str(target)].sort_values(ascending=False).index[0:int(number)].tolist()
+    print('list of {} best positive features based on pairwise correlation:\n'.format(number),best_feature_corr)
+    return best_feature_corr
