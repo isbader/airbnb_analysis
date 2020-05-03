@@ -7,22 +7,31 @@ import re
 sns.set_style('whitegrid')
 
 def missing_heat_map(DataFrame):
-        
-    # plot the missing values
-        fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (18, 6))
-        sns.heatmap(DataFrame.isnull(), yticklabels=False, ax = ax, cbar=False,\
-                    cmap='viridis')
-        ax.set_title('dataset')
-        plt.show()
+    
+    fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (18, 6))
+    sns.heatmap(DataFrame.isnull(), yticklabels=False, ax = ax, cbar=False,\
+                cmap='viridis')
+    ax.set_title('dataset')
+    plt.show()
         
     # Calculate the missing values to get a percentage 
 
-        for i in DataFrame:
-            print(i,': %',int((DataFrame[i].isnull().sum()/len(DataFrame[i]))*100),\
-                  'With {} missing values'.format((DataFrame[i].isnull().sum())))
+    for i in DataFrame:
+        print(i,': %',int((DataFrame[i].isnull().sum()/len(DataFrame[i]))*100),\
+            'With {} missing values'.format((DataFrame[i].isnull().sum())))
 
-#This function will give a brief description of the distribution of data with and without outliers
+
 def no_outlier(Data_column,data_set):
+
+    """
+    This function will give a brief description of the distribution of data with and without outliers
+    Arguments:
+    Data_column: takes a string of the name of the column
+    data_set: takes the data frame without parentheses
+
+    Returns:
+    four plots and a brief description of the data distribution
+    """
 
     X = data_set[Data_column] #set the dataframe
     no_outlier = [] 
@@ -64,15 +73,44 @@ def no_outlier(Data_column,data_set):
 
 def get_wordcount(column,df):
 
+    """
+    This function will give you the word count each row in the column
+    Arguments:
+    column: takes a string of the name of the column
+    df: takes the data frame without parentheses
+
+    Returns:
+    pandas.core.series containing the wordcounts
+    """
+
     return df[str(column)].apply(lambda x : len(x.split(' ')) if type(x) == str else 0)
 
 
 def get_number(str):
 
+    """
+    This function will return only the numbers from a string
+    Arguments:
+    str: takes a string
+ 
+    Returns:
+    a float containing the digits in the string
+    """
+
     return float(re.sub("[^0-9]", "", str))
 
 
 def plot_corr(df):
+
+    """
+    This function will plot the correlation
+    Arguments:
+    df: takes a data frame 
+ 
+    Returns:
+    a plot of the correlations in the data frame
+    """
+
     plt.figure(figsize=(20,10))
     corr=df.corr()
     sns.set(font_scale=2.5)
@@ -80,6 +118,20 @@ def plot_corr(df):
 
 
 def plot_line_correlation(dependent,target,dataframe,color='red'):
+
+    """
+    This function will plot a scatter plot of a dependent variable to a target 
+    Arguments:
+    dependent: take a list of column names for the dependent variable (Maximum = 8)
+    target: takes a string with the target column name
+    data frame:Takes a data frame name without parentheses
+    color: optional- choose the color of plots
+
+ 
+    Returns:
+    a plot for every dependent variable in the list
+    """
+
     if len(dependent) == 1:
         ncols = 1 #specify the number of columns
         nrows = 1 #specify the number of rows 
@@ -165,14 +217,47 @@ def plot_line_correlation(dependent,target,dataframe,color='red'):
 
 
 def replace_mean(column,df):
+    
+    """
+    The function will return the column after filling the missing values with the mean
+    Arguments:
+    column: column name in string format
+    df: Dataframe name without parentheses
+    
+    Returns:
+    The inserted column after filling the missing values with the mean
+    
+    """
+
     return df[str(column)].fillna(df[str(column)].mean(),inplace = True)
 
 
 def change_tobool(column,df):
+
+    """
+    This function changes the t,f to integer 1,0
+    Arguments:
+    column: column name in string format
+    df: Dataframe name without parentheses
+ 
+    Returns:
+    The inserted column after replacing t,f values to 1,0
+    
+    """
+
     df[str(column)] = df[str(column)].apply(lambda x : 1 if x == 't' else 0)
 
 
 def magnify_corr(dataframe):
+
+    """
+    This function will plot the correlation using an interactive plot
+    Arguments:
+    dataframe: takes a dataframe 
+ 
+    Returns:
+    a plot of the correlations in the data frame
+    """
     
     cmap=sns.diverging_palette(5, 250, as_cmap=True)
     corr = dataframe.corr()
@@ -189,7 +274,19 @@ def magnify_corr(dataframe):
         .set_precision(2)\
         .set_table_styles(a)
 
+
 def top_corr_features(target,number,dataframe):
-    best_feature_corr=dataframe.corr()[str(target)].sort_values(ascending=False).index[0:int(number)].tolist()
-    print('list of {} best positive features based on pairwise correlation:\n'.format(number),best_feature_corr)
+    """
+    This function will give you the required number of highest correlated features to a target 
+    Arguments:
+    target: column name in string format of the targeted column
+    number: The number of highest correlated features required
+    data frame: the data frame name without parenthesis 
+
+    returns: A list of the highest correlated features with the target (will also print the list)
+    """
+    best_feature_corr=dataframe.corr()[str(target)].sort_values(ascending=False)\
+        .index[0:int(number)].tolist()
+    print('list of {} best positive features based on pairwise correlation:\n'\
+        .format(number),best_feature_corr)
     return best_feature_corr
